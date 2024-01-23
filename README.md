@@ -3,88 +3,149 @@
 
 ### Project Title
 
-Provide the title of your project.
 
-**_Sample:_** _CryptoTracker_
+
+ EventBooking DApp
 
 ### Project abstract
 
-Provide a brief overview of your project here.
 
-**_Sample:_**
-_We're building CryptoTracker, a decentralized platform to track and manage cryptocurrency portfolios._
+
+
+_The EventBooking DApp is a decentralized application (DApp) that facilitates the seamless hosting and booking of events using cryptocurrencies such as Ethereum (ETH) and Matic. The core functionality involves users being able to host events and interested participants being able to book tickets using supported cryptocurrencies. Each booked ticket is represented as a unique non-fungible token (NFT) containing a QR code for easy verification by event organizers._
 
 ### Project breakdown
 
-Provide a comprehensive explanation of your project. This should include a detailed description of what your project is all about, its main objectives, and its intended impact or benefits. Also, describe how your project works. This can include an overview of the processes or mechanisms involved, the technologies or methods used, and how these contribute to achieving the project's goals.
+The EventBooking DApp offers a user-friendly and secure platform for event organizers and attendees to interact with the decentralized world of event hosting and ticket booking. Here's a breakdown of its key features and functionalities:
 
-**_Sample:_**
+Event Hosting:
 
-_CryptoTracker is a state-of-the-art, highly secure, and user-oriented application designed specifically for cryptocurrency enthusiasts and investors. It has been meticulously crafted to provide an efficient and simplified platform for managing digital assets._
+Users can create and host events through the DApp.
+Essential details such as event name, date, time, venue, and ticket prices can be specified during the event creation process.
+Ticket Booking:
 
-_Upon logging into the CryptoTracker system, users are greeted with a clean, intuitive interface that allows for effortless navigation. Here, users can smoothly add, monitor, and organize their diverse range of cryptocurrency holdings. The application supports a wide spectrum of cryptocurrencies, ensuring that users can manage all their assets in a single, consolidated space._
+Interested participants can browse through the list of events and book tickets using supported cryptocurrencies.
+The booking process involves a secure and straightforward payment system integrated with Ethereum and Matic.
+NFT Ticket Generation:
 
-_Beyond simple asset management, CryptoTracker also serves as a hub for real-time market data. This feature acts as a window into the pulse of the cryptocurrency market, giving users access to the latest price movements, trends, and fluctuations of various cryptocurrencies. This invaluable information is presented in an easy-to-understand format, providing users with crucial insights without overwhelming them with complex data._
+Upon successful booking, users receive a unique NFT as their event ticket.
+The NFT contains relevant details about the event and a QR code that serves as a digital ticket.
+QR Code Verification:
 
-_In addition to real-time market data, CryptoTracker is equipped with a comprehensive portfolio analysis toolkit. This suite of tools enables users to track the performance of their portfolio over various time frames, from daily changes to long-term trends. By visualizing their portfolio data, users can gain a deeper understanding of their investment strategy's effectiveness, identify potential areas for improvement, and make more informed, data-driven decisions._
+Event organizers can scan the QR code on the NFT to verify the authenticity of the ticket.
+This ensures a secure and efficient entry process at the event venue.
+Real-time Event Updates:
 
-_CryptoTracker's portfolio analysis features also allow for a more granular view of each user's investments. Users can examine the performance of individual assets, compare them against different market indices, and assess their contribution to the overall portfolio. These in-depth analytical capabilities can help users fine-tune their investment strategies, optimize their asset allocation, and maximize the potential returns on their portfolio._
+Users can receive real-time updates about their booked events, including any changes in schedule or venue.
+User Wallet Integration:
 
-_CryptoTracker is not just a tool, but a comprehensive platform that combines effective asset management, real-time market insights, and in-depth portfolio analysis. It's designed to empower cryptocurrency investors, enabling them to take full control over their digital assets and make well-informed investment decisions._
+The DApp integrates with users' cryptocurrency wallets (such as MetaMask) for secure transactions and ticket management.
 
 ### Technology Stack
 
-Please enumerate the technologies, tools, and frameworks that you're planning to utilize in the development and implementation of your project. This should include both the front-end and back-end technologies, databases, cloud services, libraries, and other relevant software components.
+The EventBooking DApp leverages a variety of technologies to ensure its functionality, security, and user experience. The technology stack includes:
 
-**_Sample:_**
+Smart Contracts:
 
-- _Solidity_
-- _React.js_
-- _Express.js_
-- _Node.js_
+Solidity is used to develop smart contracts that handle the logic of event creation, ticket booking, and NFT generation.
+Front-end Development:
 
+Next.js is employed to build the web application's front end, providing a fast and responsive user interface.
+Blockchain Integration:
+
+Ethereum and Matic are integrated to support cryptocurrency transactions and interact with smart contracts on the respective blockchains.
+Styling:
+
+Tailwind CSS is utilized for efficient styling and design, ensuring a visually appealing and user-friendly interface.
 ### Work Flow Diagram
 
-Attach a visual representation of your project's workflow. This helps understand the overall structure.
 
-[Insert Image/Link to Work Flow Diagram]
 
 ### Application Workflow Storyboard
 
-[Insert Image/Link to Storyboard]
+![Blank diagram](https://github.com/codesters-r2w3/Project-proposal/assets/79699023/93c5e4f7-c458-4315-aa79-1474b0a14864)
 
-Elaborate on how the various components within your application will interact with each other. This includes detailing how data flows between sections, how the components communicate, and how they depend on each other.
+## Event Hosting
 
-**_Sample:_**
+1. **User creates a new event:** 
+   - User enters event details through the frontend.
 
-**_User Registration_**
+2. **Frontend triggers a transaction:**
+   - Frontend initiates a transaction to the smart contract on the Ethereum/Matic blockchain to record event data.
 
-1. _User enters registration details._
-2. _Smart contract verifies and records user data._
+3. **Smart contract verification:**
+   - Smart contract verifies the entered data and adds the event to the blockchain.
 
-**_Portfolio Management_**
+## Ticket Booking
 
-1. _User adds a new cryptocurrency._
-2. _Backend updates user's portfolio data._
-3. _Frontend dynamically reflects the changes._
+1. **User browses and selects an event:** 
+   - User browses available events and selects an event to book.
 
-**_Real-time Market Data_**
+2. **Frontend initiates a transaction:**
+   - Frontend triggers a cryptocurrency transaction to the smart contract for ticket purchase.
 
-1. _User requests real-time market data._
-2. _Frontend triggers a request to external APIs._
-3. _Display updated market information._
+3. **Smart contract verification and NFT generation:**
+   - Smart contract verifies the transaction, generates a unique NFT as a digital ticket, and records ownership on the blockchain.
+   - NFT details and QR code are sent to the user's wallet.
 
-**_Transaction Execution_**
+## QR Code Verification
 
-1. _User initiates a buy/sell transaction._
-2. _Smart contract executes the transaction securely._
+1. **Event organizer scans the QR code:** 
+   - Event organizer scans the QR code on the user's NFT using the frontend.
 
-**_Touchpoints_**
+2. **Frontend verification request:**
+   - Frontend sends a verification request to the smart contract on the blockchain.
 
-- _Frontend communicates with backend via REST APIs._
-- _Smart contracts manage user data securely._
+3. **Smart contract validates the NFT:**
+   - Smart contract validates the NFT and confirms ticket authenticity.
 
-_[Add any additional touchpoints and interactions as relevant]_
+4. **Event organizer confirmation:**
+   - Event organizer receives confirmation, granting entry to the event.
+
+## Real-time Event Updates
+
+1. **Event details recorded on the blockchain:**
+   - Event details and updates are recorded on the blockchain by the smart contract.
+
+2. **Frontend checks for updates:**
+   - Frontend regularly checks for updates and displays real-time information to users.
+
+## User Wallet Integration
+
+1. **Frontend integrates with users' wallets:**
+   - Frontend integrates with users' cryptocurrency wallets (e.g., MetaMask) for secure transactions.
+
+2. **Smart contracts interact with the wallet:**
+   - Smart contracts interact with the user's wallet for payment processing and NFT ownership.
+
+## Scaling and Load Balancing
+
+1. **Load balancing mechanisms:**
+   - In case of increased user activity, load balancing mechanisms distribute incoming requests among multiple servers.
+
+2. **Horizontal scaling:**
+   - Horizontal scaling involves deploying additional nodes to handle increased traffic.
+
+3. **Database optimization:**
+   - Optimized database queries ensure efficient data retrieval and storage.
+
+## Touchpoints
+
+1. **Frontend communication with blockchain:**
+   - Frontend communicates with the Ethereum/Matic blockchain through Web3.js for smart contract interactions.
+
+2. **Smart contract management:**
+   - Smart contracts manage the creation of events, ticket bookings, and verification.
+
+3. **Blockchain as a decentralized ledger:**
+   - Blockchain serves as a decentralized ledger ensuring transparency and security.
+
+4. **External APIs for real-time updates:**
+   - External APIs may be utilized for real-time event updates or market information.
+
+5. **User wallet interaction:**
+   - User wallets interact with the frontend and smart contracts for cryptocurrency transactions and NFT ownership.
+
 
 ### Milestone Breakdown
 
@@ -94,7 +155,8 @@ Outline the key milestones for your project and the associated timelines.
 
 1. **_Project Kick-off (Days 1-2)_:** _Team formation and project ideation_.
 2. **_Design Phase (Days 3-4)_:** _Create wireframes and finalize design concepts_.
-3. **_Development Sprint (Days 5-6)_:** _Implement core functionalities (e.g., user registration, portfolio management)_.
+3. **_Smart Contract development (Days 1-2)_:** _Design and implement smart contracts for event creation, ticket booking, and NFT generation._.
+4. 3. **_Frontend development (Days 2-3)_:** _Design and implement frontend components for user registration, event creation, and ticket booking and wallet integration.._.
 
 ---
 
@@ -106,19 +168,22 @@ Please ensure to add the names of each member of your team along with their resp
 
 **_Sample:_**
 
-- Alice Johnson ([GitHub Profile](https://github.com/alicejohnson))
-- Bob Smith ([GitHub Profile](https://github.com/bobsmith))
-- Charlie Brown ([GitHub Profile](https://github.com/charliebrown))
+- NIkhil Taneja ([GitHub Profile](https://github.com/nikhil075))
+- Revand S ([GitHub Profile](https://github.com/revand5467))
+- Sidharth ([GitHub Profile](https://github.com/SIDHARTH20K4))
+- Vignesh Murugan ([GitHub Profile](https://github.com/webdev-vignesh))
 
 ### Individual Contribution Breakdown
 
-Please ensure to clearly define the responsibilities and tasks of each team member. This includes detailing their specific role within the project, outlining their duties, and setting clear expectations for their contribution.
+
 
 **_Sample:_**
 
-- _Alice Johnson: Smart Contract Development_
-- _Bob Smith: Frontend Design and Implementation_
-- _Charlie Brown: Backend Development_
+- _NIkhil Taneja: Smart Contract Development(Event creation)_
+- _Vignesh Murugan: Frontend Design and Implementation (Home page and booking)_
+- _Revand S: Frontend and implementation (Qr code scanning and verifying
+)_
+- _Sidharth : Smart Contract Development(NFT creation)_
 
 ---
 
@@ -127,8 +192,8 @@ Please ensure to clearly define the responsibilities and tasks of each team memb
 **Answer the following questions regarding the future prospects and scaling of your project.**
 
 1. What are the potential future features or enhancements you envision for your project?
-   - **_Sample_**: _We plan to integrate a real-time news feed for cryptocurrencies_.
+   - We envision implementing a community engagement feature, allowing event attendees to interact, share experiences, and rate events within the DApp.
 2. How do you plan to scale the project if there's an increase in user activity or data volume?
-   - **_Sample_**: _We'll implement load balancing and optimize database queries_.
+   - In the event of increased user activity, we plan to implement horizontal scaling by deploying additional nodes and utilizing blockchain scaling solutions like layer 2 solutions for Ethereum (e.g., Optimistic Rollups) to enhance transaction throughput.
 3. Provide a concise one-line summary of your proposal and its objectives.
-   - **_Sample_**: _Our project, CryptoTracker, aims to revolutionize cryptocurrency management with a decentralized platform for secure asset tracking and real-time market analysis._
+   - Our project, EventBooking DApp, aims to transform event management by providing a decentralized platform for hosting and booking events, with secure NFT-based tickets and seamless cryptocurrency transactions.

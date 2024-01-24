@@ -12,7 +12,7 @@
 
 
 
-_The EventBooking DApp is a decentralized application (DApp) that facilitates the seamless hosting and booking of events using cryptocurrencies such as Ethereum (ETH) and Matic. The core functionality involves users being able to host events and interested participants being able to book tickets using supported cryptocurrencies. Each booked ticket is represented as a unique non-fungible token (NFT) containing a QR code for easy verification by event organizers._
+_The EventBooking DApp is a decentralized application (DApp) that facilitates the seamless hosting and booking of events using cryptocurrencies such as Ethereum (ETH) and Matic. The core functionality involves users being able to host events and interested participants being able to book tickets using supported cryptocurrencies. Each booked ticket is represented as a unique non-fungible token (NFT) containing a QR code for easy verification by event organizers. The NFT burns itself after the end of the event so that it cannot be misused.
 
 ### Project breakdown
 

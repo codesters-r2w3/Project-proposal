@@ -62,15 +62,17 @@ const Hero = () => (
         />
 
         <a href="#explore">
-          <div className="w-full flex justify-end sm:-mt-[70px] -mt-[50px] pr-[40px] relative z-10">
-          <Marquee
-          
-         speed={100}
-            >
-              <h2 className="text-white font-bold text-5xl mb-4 py-10">Sale ends soon !!</h2>
-              
-             
-            </Marquee>
+          <div className="max-full flex justify-end sm:-mt-[70px] -mt-[50px] pr-[40px] relative z-10">
+        <Marquee
+            
+            gradientWidth={50}
+            gradientColor="rgb(26,35,46)"
+            speed={100}
+        >
+            <h2 className="text-white font-bold text-5xl mb-4 py-10">Sale ends soon !!</h2>
+            <h2 className="text-white font-bold text-5xl mb-4 py-10"><div className="w-[300px]"> </div></h2>
+            <h2 className="text-white font-bold text-5xl mb-4 py-10">Hurry now !!</h2>
+        </Marquee>
 
             <img
               src="/stamp.png"

@@ -26,7 +26,7 @@ const Navbar = () => (
         </div>
      
       <h2 className="font-extrabold text-[24px] leading-[30.24px] text-white">
-        Codester
+       Team  Codester
       </h2>
       <button className="bg-white rounded-lg p-3">
         Connect wallet

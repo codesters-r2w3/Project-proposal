@@ -1,5 +1,7 @@
 'use client';
 import './hero.css';
+import Marquee from "react-fast-marquee";
+import { Player } from '@lottiefiles/react-lottie-player';
 import { motion } from 'framer-motion';
 import   Search   from '../components/Search';
 import styles from '../styles';
@@ -15,18 +17,30 @@ const Hero = () => (
       className={`${styles.innerWidth} mx-auto flex flex-col`}
     >
       <div className="flex justify-center items-center flex-col relative z-10">
-        <motion.h1 variants={textVariant(1.1)} className={styles.heroHeading}>
-          Book now !!
-          
-        </motion.h1>
-        <div className= "flex flex-row gap-3">
-        <img
+      <div className= " flex mt-10 ">
+        {/* <img
         src="/search.svg"
         alt="search"
         className="w-[24px] h-[24px] object-contain"
       />
-      <Search/>
+       */}
+       <div className= "w-[500px] h-[0px] z-20  object-contain">
+       <Player
+     
+     src='/astronot.json'
+     className="player "
+     loop
+     autoplay
+   />
+   
+       </div>
+    
         </div>
+        <motion.h1 variants={textVariant(1.1)} className={styles.heroHeading}>
+          Book now !!
+          
+        </motion.h1>
+      
         <motion.div
           variants={textVariant(1.2)}
           className="flex flex-row justify-center items-center"
@@ -34,13 +48,13 @@ const Hero = () => (
          
         </motion.div>
       </div>
-
+      
       <motion.div
         variants={slideIn('right', 'tween', 0.2, 1)}
         className="relative w-full md:-mt-[20px] -mt-[12px]"
       >
         <div className="absolute w-full h-[300px] hero-gradient rounded-tl-[140px] rounded-[140px] z-[0] -top-[30px]" />
-
+        
         <img
           src="/cover.png"
           alt="."
@@ -49,6 +63,15 @@ const Hero = () => (
 
         <a href="#explore">
           <div className="w-full flex justify-end sm:-mt-[70px] -mt-[50px] pr-[40px] relative z-10">
+          <Marquee
+          
+         speed={100}
+            >
+              <h2 className="text-white font-bold text-5xl mb-4 py-10">Sale ends soon !!</h2>
+              
+             
+            </Marquee>
+
             <img
               src="/stamp.png"
               alt="."

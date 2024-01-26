@@ -9,12 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@lottiefiles/react-lottie-player": "^3.5.3",
     "@metamask/sdk-react": "^0.14.2",
     "@mui/material": "^5.15.6",
     "framer-motion": "^11.0.3",
     "next": "14.1.0",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-fast-marquee": "^1.6.3"
   },
   "devDependencies": {
     "@types/node": "^20",

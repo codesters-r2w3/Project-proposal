@@ -1,34 +1,64 @@
-// SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.9;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
 
-// Uncomment this line to use console.log
-// import "hardhat/console.sol";
-
-contract Lock {
-    uint public unlockTime;
-    address payable public owner;
-
-    event Withdrawal(uint amount, uint when);
-
-    constructor(uint _unlockTime) payable {
-        require(
-            block.timestamp < _unlockTime,
-            "Unlock time should be in the future"
-        );
-
-        unlockTime = _unlockTime;
-        owner = payable(msg.sender);
+contract Nft {
+    
+    uint256 currentTime = block.timestamp;
+    struct Event{
+        string eventName;
+        string eventVenue;
+        uint256 Time;
+        uint256 Duration;
+        string createrName;
+        address creatorAddress;
+        string imgUrl;
     }
-// change
-    function withdraw() public {
-        // Uncomment this line, and the import of "hardhat/console.sol", to print a log in your terminal
-        // console.log("Unlock time is %o and block timestamp is %o", unlockTime, block.timestamp);
+    Event[] public events; // creation of dynamic array
+    struct Person{
+        string Name;
+        bytes1 Gender;
+        uint256 Age;
+    }
+    
+    Event public myEvent; // creating an instance for this event struct
+    
+    function createEvent(
+        string calldata _eventName,
+        string calldata _evntVenue,
+        uint256 _Time,
+        uint256 _Duration,
+        address _creatorAddress,
+        string memory _imgUrl
+    ) 
+    public 
+    {
+        require(_Time > block.timestamp,"event time must be in future");
 
-        require(block.timestamp >= unlockTime, "You can't withdraw yet");
-        require(msg.sender == owner, "You aren't the owner");
+        myEvent.eventName = _eventName;
+        myEvent.eventVenue = _evntVenue;
+        myEvent.Duration = _Duration;
+        myEvent.creatorAddress = _creatorAddress;
+        myEvent.imgUrl = _imgUrl;
+        myEvent.Time = _Time + currentTime;
 
-        emit Withdrawal(address(this).balance, block.timestamp);
+        //pushing the event details to the array
+        Event memory newEvent;
+        newEvent = myEvent;
+        events.push(newEvent);
+    }
 
-        owner.transfer(address(this).balance);
+
+    function endEvents() private  {
+        uint256 i = 0;
+        while (i < events.length) {
+            if (events[i].Time + events[i].Duration < block.timestamp) {
+                if (i < events.length - 1) {
+                    events[i] = events[events.length - 1];
+                }
+                events.pop();
+            } else {
+                i++;
+            }
+        }
     }
 }

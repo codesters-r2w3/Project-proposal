@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import   Search   from '../components/Search';
 import styles from '../styles';
 import { navVariants } from '../utils/motion';
-import Sidebar from './sidebar';
+import Sidebar from '../components/Sidebar';
 
 const Navbar = () => (
   <>
@@ -40,6 +40,7 @@ const Navbar = () => (
         alt="menu"
         className="w-[24px] h-[24px] object-contain"
       />
+      <Sidebar/>
     </div>
   </motion.nav></>
 );

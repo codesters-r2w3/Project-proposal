@@ -1,22 +1,34 @@
+'use client'
 import React from "react";
+import { useEffect } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { FiMousePointer } from "react-icons/fi";
 import Image from "next/image";
 import img1 from '../public/event1.jpg'
+import { useRouter } from 'next/navigation';
+import { withRouter } from 'next/router';
+import {  useStateContext } from "../context/eventContext.js";
+import { useContext } from "react";
 const Example = ({name2 , imageUrl1 , imageUrl2 ,id , description , location , organizer}) => {
+  const { setProps } = useStateContext();
+  useEffect(() => {
+    // Store the props in the context when the component mounts
+    setProps({ name2, imageUrl1, imageUrl2, id, description, location, organizer });
+  }, []);
+
   return (
     <div className="grid w-full border-[#1a232e] place-content-center bg-[#1a232e] from-#1a232e to-violet-500 px-4 py-4 text-slate-900">
-      <TiltCard imageUrl={img1}  name1={name2}
+      <TiltCard imageUrl={img1}  name1={name2} setProps={setProps}
       id={id} description={description} location={location} organizer={organizer}
       />
     </div>
   );
 };
 import Link from 'next/link'
-const TiltCard = ({name1, imageUrl, imageUrl2 ,id , description , location , organizer }) => {
+const TiltCard = ({setProps , name1, imageUrl, imageUrl2 ,id , description , location , organizer }) => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const router = useRouter();
+  
   const mouseXSpring = useSpring(x);
   const mouseYSpring = useSpring(y);
 
@@ -52,20 +64,13 @@ const TiltCard = ({name1, imageUrl, imageUrl2 ,id , description , location , org
     y.set(0);
   };
   const handleCardClick = () => {
-    router.push(`/details/${id}`, undefined, {
-      shallow: true, // Ensure smooth transition
-      query: {
-        id,
-        name1,
-        imageUrl,
-        description,
-        location,
-        organizer,
-      },
-    });
+    // Set context values when the card is clicked
+    //const { setProps } = useStateContext();
+    setProps({ name1, imageUrl, imageUrl2, id, description, location, organizer });
+    // Additional logic if needed
   };
   return (
-  
+  <Link href={`/details/${id}`}>
     <motion.div
     onClick={handleCardClick}
       onMouseMove={handleMouseMove}
@@ -111,8 +116,9 @@ const TiltCard = ({name1, imageUrl, imageUrl2 ,id , description , location , org
         </p>
       </div>
     </motion.div>
-    
+    </Link>
   );
+  
 };
 
 export default Example;

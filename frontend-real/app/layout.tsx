@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Abel } from 'next/font/google'
 import '../styles/globals.css';
 import '../styles';
+
 const roboto = Abel({
   weight: '400',
   subsets: ['latin'],
@@ -25,7 +26,12 @@ export default function RootLayout({
       <link rel="preconnect" href="https://stijndv.com" />
       <link rel="stylesheet" href="https://stijndv.com/fonts/Eudoxus-Sans.css" />
       </head>
-      <body className={roboto.className}>{children}</body>
+      <body className={roboto.className}>
+        
+        {
+      
+      children
+      }</body>
     </html>
   );
 }

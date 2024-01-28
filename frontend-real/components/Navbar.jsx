@@ -5,15 +5,19 @@ import   Search   from '../components/Search';
 import styles from '../styles';
 import Sidebar from '../components/Sidebar';
 import { navVariants } from '../utils/motion';
+import Sidebar from './sidebar';
 
 
 const Navbar = () => (
+  <>
+  
   <motion.nav
     variants={navVariants}
     initial="hidden"
     whileInView="show"
     className={`${styles.xPaddings} py-16 px-8 relative`}
   >
+    
     <div className="absolute w-[50%] inset-0 gradient-01" />
     <div
       className={`${styles.innerWidth} mx-auto flex justify-between gap-8`}
@@ -40,7 +44,7 @@ const Navbar = () => (
       />
       <Sidebar />
     </div>
-  </motion.nav>
+  </motion.nav></>
 );
 
 export default Navbar;

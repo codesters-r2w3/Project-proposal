@@ -63,7 +63,18 @@ const Hero = () => (
 
         <a href="#explore">
           <div className="max-full flex justify-end sm:-mt-[70px] -mt-[50px] pr-[40px] relative z-10">
-        <Marquee
+        
+
+            {/* <img
+              src="/stamp.png"
+              alt="."
+              className="sm:w-[155px] w-[100px] sm:h-[155px] h-[100px] object-contain"
+            /> */}
+          </div>
+        </a>
+      </motion.div>
+    </motion.div>
+    <Marquee
             
             gradientWidth={50}
             gradientColor="rgb(26,35,46)"
@@ -73,16 +84,6 @@ const Hero = () => (
             <h2 className="text-white font-bold text-5xl mb-4 py-10"><div className="w-[300px]"> </div></h2>
             <h2 className="text-white font-bold text-5xl mb-4 py-10">Hurry now !!</h2>
         </Marquee>
-
-            <img
-              src="/stamp.png"
-              alt="."
-              className="sm:w-[155px] w-[100px] sm:h-[155px] h-[100px] object-contain"
-            />
-          </div>
-        </a>
-      </motion.div>
-    </motion.div>
   </section>
 );
 

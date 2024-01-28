@@ -3,7 +3,9 @@
 import { motion } from 'framer-motion';
 import   Search   from '../components/Search';
 import styles from '../styles';
+import Sidebar from '../components/Sidebar';
 import { navVariants } from '../utils/motion';
+
 
 const Navbar = () => (
   <motion.nav
@@ -36,6 +38,7 @@ const Navbar = () => (
         alt="menu"
         className="w-[24px] h-[24px] object-contain"
       />
+      <Sidebar />
     </div>
   </motion.nav>
 );

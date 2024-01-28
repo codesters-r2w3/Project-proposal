@@ -5,7 +5,7 @@ import Image from "next/image";
 import img1 from '../public/event1.jpg'
 const Example = ({name2 , imageUrl1}) => {
   return (
-    <div className="grid w-full place-content-center bg-gradient-to-br from-indigo-500 to-violet-500 px-4 py-12 text-slate-900">
+    <div className="grid w-full border-[#1a232e] place-content-center bg-[#1a232e] from-#1a232e to-violet-500 px-4 py-4 text-slate-900">
       <TiltCard imageUrl={img1}  name1={name2}/>
     </div>
   );
@@ -59,7 +59,7 @@ const TiltCard = ({name1, imageUrl }) => {
         rotateX,
         transformStyle: "preserve-3d",
       }}
-      className="relative h-96 w-72 rounded-xl bg-gradient-to-br from-indigo-300 to-violet-300 overflow-hidden"
+      className="relative h-96 w-72 rounded-xl  from-[#05100f] to-violet-300 overflow-hidden"
     >
       <div
         style={{

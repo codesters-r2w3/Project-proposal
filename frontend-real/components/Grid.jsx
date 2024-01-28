@@ -30,6 +30,11 @@ export default function RowAndColumnSpacing() {
               <Item >
                 <Card 
                 key={e.id}
+                id = {e.id}
+                description={e.description}
+                imagUrl2= {e.image2Url}
+                location = {e.location}
+                organizer = {e.organizerName}
                 name2={e.eventName } imageUrl1 ={ e.image1Url}/>
               </Item>
             </Grid>

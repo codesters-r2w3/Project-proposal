@@ -3,18 +3,20 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { FiMousePointer } from "react-icons/fi";
 import Image from "next/image";
 import img1 from '../public/event1.jpg'
-const Example = ({name2 , imageUrl1}) => {
+const Example = ({name2 , imageUrl1 , imageUrl2 ,id , description , location , organizer}) => {
   return (
     <div className="grid w-full border-[#1a232e] place-content-center bg-[#1a232e] from-#1a232e to-violet-500 px-4 py-4 text-slate-900">
-      <TiltCard imageUrl={img1}  name1={name2}/>
+      <TiltCard imageUrl={img1}  name1={name2}
+      id={id} description={description} location={location} organizer={organizer}
+      />
     </div>
   );
 };
-
-const TiltCard = ({name1, imageUrl }) => {
+import Link from 'next/link'
+const TiltCard = ({name1, imageUrl, imageUrl2 ,id , description , location , organizer }) => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-
+  const router = useRouter();
   const mouseXSpring = useSpring(x);
   const mouseYSpring = useSpring(y);
 
@@ -49,9 +51,23 @@ const TiltCard = ({name1, imageUrl }) => {
     x.set(0);
     y.set(0);
   };
-
+  const handleCardClick = () => {
+    router.push(`/details/${id}`, undefined, {
+      shallow: true, // Ensure smooth transition
+      query: {
+        id,
+        name1,
+        imageUrl,
+        description,
+        location,
+        organizer,
+      },
+    });
+  };
   return (
+  
     <motion.div
+    onClick={handleCardClick}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{
@@ -95,6 +111,7 @@ const TiltCard = ({name1, imageUrl }) => {
         </p>
       </div>
     </motion.div>
+    
   );
 };
 

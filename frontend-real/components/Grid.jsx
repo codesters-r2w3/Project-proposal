@@ -26,7 +26,7 @@ export default function RowAndColumnSpacing() {
           {eventsData.map((e)=>{
            
             return(
-              <Grid className="border-[#1a232e] bottom-0" item xs={3} key={e.id}>
+              <Grid className="border-[#1a232e] bottom-0" item xs={3} >
               <Item >
                 <Card 
                 key={e.id}

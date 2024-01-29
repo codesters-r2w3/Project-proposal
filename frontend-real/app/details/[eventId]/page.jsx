@@ -201,7 +201,7 @@ const EventDetails = () => {
               </button>
             </form>
             <div className="flex flex-col pt-4">
-              <p1>Your QR (NFT) 👇</p1>
+              <p>Your QR (NFT) 👇</p>
             {userName && handleGenerateQRCode()}
             </div>
             {/* Display QR Code */}

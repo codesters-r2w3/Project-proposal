@@ -12,6 +12,8 @@
     "@lottiefiles/react-lottie-player": "^3.5.3",
     "@metamask/sdk-react": "^0.14.2",
     "@mui/material": "^5.15.6",
+    "@pinata/sdk": "^2.1.0",
+    "dotenv": "^16.4.1",
     "framer-motion": "^11.0.3",
     "next": "14.1.0",
     "react": "^18",

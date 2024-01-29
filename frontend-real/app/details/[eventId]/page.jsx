@@ -5,12 +5,14 @@ import { BiUpvote } from 'react-icons/bi';
 import Image from 'next/image';
 import img from '../../../public/event1.jpg';
 import { useStateContext } from '../../../context/eventContext.js';
+import QRCode from 'react-qr-code';
 
 const EventDetails = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [amount, setAmount] = useState('');
   const [donators, setDonators] = useState([]);
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const [userName, setUserName] = useState('');
 
   const { exampleProps } = useStateContext();
   const { name1, imageUrl, imageUrl2, id, description, location, organizer } = exampleProps;
@@ -42,12 +44,24 @@ const EventDetails = () => {
 
   const handleCloseForm = () => {
     setIsFormVisible(false);
+    setUserName('');
   };
+
+  const handleGenerateQRCode = () => {
+    // Generate QR code based on the user's name
+    // You can use any QR code generation logic or library here
+    // For this example, I'll use a simple string concatenation
+    const qrCodeData = `User: ${userName}`;
+    return <QRCode value={qrCodeData} />;
+  };
+
   const handleClickOutside = (event) => {
     if (event.target === document.querySelector('.bg-black.bg-opacity-50')) {
       setIsFormVisible(false);
+      setUserName('');
     }
   };
+
   useEffect(() => {
     const handleOutsideClick = (event) => {
       handleClickOutside(event);
@@ -119,16 +133,16 @@ const EventDetails = () => {
               </div>
               <div className="flex-1">
                 <div className="mt-[20px] flex flex-col p-4 bg-sky-100 rounded-[10px]">
-                  <p className="font-epilogue font-extrabold text-[20px] leading-[30px] text-center text-blue-900">
+                  <p className="font-epilogue font-extrabold text-[28px] leading-[30px] text-center text-blue-900">
                     Event Booking
                   </p>
                   <div className="mt-[30px]">
                     <div className="my-[20px] p-4  bg-sky-100 rounded-[10px]">
-                      <h4 className="font-epilogue font-semibold text-[14px] leading-[22px] text-blue-900">
-                        Back it because you believe in it.
+                      <h4 className="font-epilogue font-semibold text-[24px] leading-[22px] text-blue-900">
+                        Buy your tickets and claim it as NFT
                       </h4>
                       <p className="mt-[20px] font-epilogue font-normal leading-[22px] text-blue-900">
-                        Support the project for no reward, just because it speaks to you.
+                        How cool's that 😎
                       </p>
                     </div>
                     <button
@@ -162,6 +176,8 @@ const EventDetails = () => {
                   type="text"
                   id="name"
                   name="name"
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                 />
               </div>
@@ -184,6 +200,12 @@ const EventDetails = () => {
                 Pay with Crypto
               </button>
             </form>
+            <div className="flex flex-col pt-4">
+              <p>Your QR (NFT) 👇</p>
+            {userName && handleGenerateQRCode()}
+            </div>
+            {/* Display QR Code */}
+            
           </div>
         </div>
       )}

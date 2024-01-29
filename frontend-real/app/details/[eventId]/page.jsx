@@ -13,7 +13,7 @@ const EventDetails = () => {
   const [donators, setDonators] = useState([]);
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [userName, setUserName] = useState('');
-
+  const [generatedUrl, setGeneratedUrl] = useState('');
   const { exampleProps } = useStateContext();
   const { name1, imageUrl, imageUrl2, id, description, location, organizer } = exampleProps;
   const state = {
@@ -42,9 +42,30 @@ const EventDetails = () => {
     setIsFormVisible(true);
   };
 
-  const handleCloseForm = () => {
-    setIsFormVisible(false);
-    setUserName('');
+  const handleCloseForm =async () => {
+    try {
+      // Make API call to generate QR code and get the IPFS URL
+      const response = await fetch('/api/qr/generate-qr', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userName }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setGeneratedUrl(data.ipfsUrl);
+        console.log(data.ipfsUrl);
+        setGeneratedUrl(data.ipfsUrl);
+      } else {
+        console.error('Failed to generate QR code:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error generating QR code:', error);
+    }
+   // setIsFormVisible(false);
+   // setUserName('');
   };
 
   const handleGenerateQRCode = () => {
@@ -53,6 +74,7 @@ const EventDetails = () => {
     // For this example, I'll use a simple string concatenation
     const qrCodeData = `User: ${userName}`;
     return <QRCode value={qrCodeData} />;
+   
   };
 
   const handleClickOutside = (event) => {
@@ -205,6 +227,13 @@ const EventDetails = () => {
             {userName && handleGenerateQRCode()}
             </div>
             {/* Display QR Code */}
+            {generatedUrl && (
+                <>
+                  <p>IPFS URL: {generatedUrl}</p>
+                  {/* Display the QR Code */}
+                  <QRCode value={generatedUrl} />
+                </>
+              )}
             
           </div>
         </div>

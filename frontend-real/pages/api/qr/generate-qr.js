@@ -8,7 +8,7 @@ export default async function handler(req, res) {
   if (req.method === 'POST') {
     try {
       const { userName } = req.body;
-
+      console.log(userName);
       // Generate QR code with user's name
       const qrCodeData = `User: ${userName}`;
       const qrCodeBuffer = qrImage.imageSync(qrCodeData, { type: 'png' });
@@ -27,6 +27,7 @@ export default async function handler(req, res) {
       const ipfsUrl = pinFile.IpfsHash;
 
       // Return the IPFS URL of the stored QR code
+      console.log(ipfsUrl);
       res.status(200).json({ ipfsUrl });
     } catch (error) {
       console.error('Error generating QR code:', error);

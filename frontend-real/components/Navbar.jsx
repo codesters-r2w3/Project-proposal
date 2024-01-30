@@ -6,6 +6,7 @@ import styles from '../styles';
 
 import { navVariants } from '../utils/motion';
 import Sidebar from '../components/Sidebar';
+import WalletConnect from '../components/WalletConnect';
 
 
 const Navbar = () => (
@@ -34,9 +35,7 @@ const Navbar = () => (
       <h2 className="font-extrabold text-[24px] leading-[30.24px] text-white">
        Team  Codester
       </h2>
-      <button className="bg-white rounded-lg p-3">
-        Connect wallet
-      </button>
+      <WalletConnect />
       <img
         src="/menu.svg"
         alt="menu"

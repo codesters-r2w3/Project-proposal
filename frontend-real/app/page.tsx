@@ -17,6 +17,7 @@ export default function Home() {
    <Hero/>
    
    <Grid/>
+  
     <Event/>
       </div>
     

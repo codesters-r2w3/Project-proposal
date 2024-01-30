@@ -7,8 +7,8 @@ const pinata = new Pinata(process.env.KEY, process.env.SECRET);
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     try {
-      const { userName } = req.body;
-      console.log(userName);
+      const { userName, email, eventName } = req.body;
+      
       // Generate QR code with user's name
       const qrCodeData = `User: ${userName}`;
       const qrCodeBuffer = qrImage.imageSync(qrCodeData, { type: 'png' });
@@ -24,11 +24,39 @@ export default async function handler(req, res) {
       };
 
       const pinFile = await pinata.pinFileToIPFS(qrCodeStream, pinFileOptions);
-      const ipfsUrl = pinFile.IpfsHash;
+      const qrCodeIpfsUrl = pinFile.IpfsHash;
 
-      // Return the IPFS URL of the stored QR code
-      console.log(ipfsUrl);
-      res.status(200).json({ ipfsUrl });
+      // Generate metadata JSON
+      const metadata = {
+        name: userName,
+        description: `Event: ${eventName}, Email: ${email}`,
+        image: `https://gateway.pinata.cloud/ipfs/${qrCodeIpfsUrl}`,
+        attributes: [
+          {
+            trait_type: "Event Name",
+            value: eventName,
+          },
+          {
+            trait_type: "Email",
+            value: email,
+          },
+        ],
+      };
+
+      // Convert the metadata JSON to a buffer
+      const metadataBuffer = Buffer.from(JSON.stringify(metadata));
+
+      // Convert the metadata buffer to a readable stream
+      const metadataStream = streamifier.createReadStream(metadataBuffer);
+
+      // Pin the metadata JSON to Pinata
+      const pinMetadataFile = await pinata.pinFileToIPFS(metadataStream, { pinataMetadata: { name: 'metadata.json' } });
+      const metadataIpfsUrl = pinMetadataFile.IpfsHash;
+
+      // Return the IPFS URL of the stored QR code and metadata JSON
+      console.log("QR Code IPFS URL:", qrCodeIpfsUrl);
+      console.log("Metadata IPFS URL:", metadataIpfsUrl);
+      res.status(200).json({ qrCodeIpfsUrl, metadataIpfsUrl });
     } catch (error) {
       console.error('Error generating QR code:', error);
       res.status(500).json({ error: 'Failed to generate QR code' });

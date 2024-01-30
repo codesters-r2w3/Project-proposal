@@ -16,6 +16,8 @@ const EventDetails = () => {
   const [generatedUrl, setGeneratedUrl] = useState('');
   const { exampleProps } = useStateContext();
   const { name1, imageUrl, imageUrl2, id, description, location, organizer } = exampleProps;
+  const [jsonUrl, setJsonUrl] = useState('');
+
   const state = {
     title: name1,
     description: description,
@@ -42,7 +44,32 @@ const EventDetails = () => {
     setIsFormVisible(true);
   };
 
-  const handleCloseForm =async () => {
+  // const handleCloseForm =async () => {
+  //   try {
+  //     // Make API call to generate QR code and get the IPFS URL
+  //     const response = await fetch('/api/qr/generate-qr', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ userName }),
+  //     });
+
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       setGeneratedUrl(data.ipfsUrl);
+  //       console.log(data.ipfsUrl);
+  //       setGeneratedUrl(data.ipfsUrl);
+  //     } else {
+  //       console.error('Failed to generate QR code:', response.statusText);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error generating QR code:', error);
+  //   }
+  //  // setIsFormVisible(false);
+  //  // setUserName('');
+  // };
+  const handleCloseForm = async () => {
     try {
       // Make API call to generate QR code and get the IPFS URL
       const response = await fetch('/api/qr/generate-qr', {
@@ -50,14 +77,19 @@ const EventDetails = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userName }),
+        body: JSON.stringify({
+          userName,
+          email: document.getElementById('email').value,
+          eventName: state.title,
+        }),
       });
-
+  
       if (response.ok) {
         const data = await response.json();
-        setGeneratedUrl(data.ipfsUrl);
-        console.log(data.ipfsUrl);
-        setGeneratedUrl(data.ipfsUrl);
+        console.log(data.qrCodeIpfsUrl);
+        console.log(data.metadataIpfsUrl);
+        setGeneratedUrl(data.qrCodeIpfsUrl);
+        setJsonUrl(data.metadataIpfsUrl); // Set the JSON URL here
       } else {
         console.error('Failed to generate QR code:', response.statusText);
       }
@@ -65,9 +97,10 @@ const EventDetails = () => {
       console.error('Error generating QR code:', error);
     }
    // setIsFormVisible(false);
-   // setUserName('');
+    setUserName('');
   };
-
+  
+  
   const handleGenerateQRCode = () => {
     // Generate QR code based on the user's name
     // You can use any QR code generation logic or library here
@@ -229,8 +262,9 @@ const EventDetails = () => {
             {/* Display QR Code */}
             {generatedUrl && (
                 <>
-                  <p>IPFS URL: {generatedUrl}</p>
+                 <></> <p>Ticket URL: {generatedUrl}</p>
                   {/* Display the QR Code */}
+                 <a href="${jsonUrl"> <p>JSON URL: {jsonUrl}</p> </a>{/* Display the JSON URL */}
                   <QRCode value={generatedUrl} />
                 </>
               )}

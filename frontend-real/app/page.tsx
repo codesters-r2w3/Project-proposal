@@ -1,7 +1,7 @@
 import Image from "next/image";
 import   Navbar   from '../components/Navbar';
 import Hero from '../sections/Hero';
-import Grid from '../components/Grid'
+import Grid from '../components/Grid';
 
 //import Sidebar from '../components/sidebar'
 import Event from '../components/EventCreationForm'

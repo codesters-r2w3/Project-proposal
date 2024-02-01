@@ -10,6 +10,7 @@ export default function Home() {
   return (
     <div className="bg-primary-black overflow-hidden">
    <Navbar />
+
    <div className="sm:flex hidden mr-10 relative">
         {/* <Sidebar/> */}
       </div>

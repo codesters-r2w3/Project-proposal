@@ -17,6 +17,7 @@ const WalletConnect = () => {
             signer = await provider.getSigner();   
             setStatus("Connected");
             setAddress(signer.address);
+            console.log(address)
         }
     }
 

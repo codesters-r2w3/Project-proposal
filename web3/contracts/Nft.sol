@@ -9,13 +9,9 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 
 contract Nft is ERC721,Ownable {
 
-    constructor(address initialOwner) ERC721("Nft", "NFT") Ownable(initialOwner) {
-}
+    constructor(address initialOwner) ERC721("Nft", "NFT") Ownable(initialOwner) {}
 
-    using Strings for uint256;
-
-    uint256 private tokenId = 1;
-    
+    using Strings for uint256;    
     uint256 currentTime = block.timestamp;
 
     struct Event{
@@ -23,43 +19,39 @@ contract Nft is ERC721,Ownable {
         string eventVenue;
         uint256 Time;
         uint256 Duration;
-        string createrName;
+        string creatorName;
         address creatorAddress;
         string imgUrl;
         uint256 totalSupply;
     }
-    Event[] public events; // creation of dynamic array
-    mapping (string => uint256) eventToIndex;
-    mapping (uint256 => address) eventAttendee;
-    mapping (uint256 => string) _tokenURI;
-    
-    Event public myEvent; // creating an instance for this event struct
-    
+
+    Event[] public events; // creation of dynamic array tostore the events
+    mapping (address => mapping(uint256 => Event)) personToEvents;
+    uint256 nextEventId = 1;
+    uint256 tokenId = 1;
+        
     function createEvent(
         string calldata _eventName,
-        string calldata _evntVenue,
+        string calldata _eventVenue,
         uint256 _Time,
         uint256 _Duration,
-        address _creatorAddress,
+        string calldata _creatorName,
         string memory _imgUrl,
         uint256 _totalSupply
     ) 
     public 
     {
-        require(_Time > block.timestamp,"event time must be in future");
-
-        myEvent.eventName = _eventName;
-        myEvent.eventVenue = _evntVenue;
-        myEvent.Duration = _Duration;
-        myEvent.creatorAddress = _creatorAddress;
-        myEvent.imgUrl = _imgUrl;
-        myEvent.Time = _Time + currentTime;
-        myEvent.totalSupply = _totalSupply;
-
-        //pushing the event details to the array
-        Event memory newEvent;
-        newEvent = myEvent;
-        events.push(newEvent);
+        require(block.timestamp > _Time, "event time must be in future");
+        events.push(Event({
+        eventName: _eventName,
+        eventVenue: _eventVenue,
+        Time: _Time,
+        Duration: _Duration,
+        creatorName: _creatorName,
+        creatorAddress: msg.sender,
+        imgUrl: _imgUrl,
+        totalSupply: _totalSupply
+        }));
     }
 
     function getEvent() public view returns (Event[] memory) {
@@ -78,7 +70,7 @@ contract Nft is ERC721,Ownable {
                 i++;
             }
         }
-    }
+}
 
     //defining the structure of the person 
     enum gender {M,F}
@@ -99,20 +91,18 @@ contract Nft is ERC721,Ownable {
         myPerson.Address = _address;
     }
 
-
-    function selectEvent(string calldata _eventName) public  {
-        uint256 index = eventToIndex[_eventName];
-        require(index < events.length,"invalid event name");
-        require(events[index].totalSupply > 0,"no available tickets");
-        events[index].totalSupply--;
+    function selectEvent(uint256 eventId) public {
+        require(eventId > 0 && eventId < nextEventId,"Invalid event ID");
+        Event storage selectedEvent = events[eventId - 1];
+        require(selectedEvent.Time > block.timestamp, "Event has already started");
+        require(selectedEvent.totalSupply > 0,"no available tickets");
+        selectedEvent.totalSupply--;
 
         _safeMint(msg.sender, tokenId);
-        eventAttendee[tokenId] = msg.sender; // Track the attendee for the NFT
-        _tokenURI[tokenId] = events[index].imgUrl;// Set the token URI to the image URL
+        personToEvents[msg.sender][eventId] = selectedEvent;
         tokenId++;
 
-        // NFT burns after the beginning of the event
-        require(currentTime > myEvent.Time,"event started");
+        require(currentTime > selectedEvent.Time,"event already started");
         _burn(tokenId);
-    }
+        }
 }

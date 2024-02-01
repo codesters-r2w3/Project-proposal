@@ -62,6 +62,10 @@ contract Nft is ERC721,Ownable {
         events.push(newEvent);
     }
 
+    function getEvent() public view returns (Event[] memory) {
+        return events;
+    }
+
     function endEvents() private  {
         uint256 i = 0;
         while (i < events.length) {

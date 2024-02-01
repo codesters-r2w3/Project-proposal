@@ -4,10 +4,14 @@ pragma solidity ^0.8.20;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
 
-contract Nft is ERC721,Ownable,ERC721URIStorage {
+
+contract Nft is ERC721,Ownable {
+
+    constructor(address initialOwner) ERC721("Nft", "NFT") Ownable(initialOwner) {
+}
+
     using Strings for uint256;
 
     uint256 private tokenId = 1;
@@ -26,7 +30,8 @@ contract Nft is ERC721,Ownable,ERC721URIStorage {
     }
     Event[] public events; // creation of dynamic array
     mapping (string => uint256) eventToIndex;
-    mapping (address => uint) eventAttendee;
+    mapping (uint256 => address) eventAttendee;
+    mapping (uint256 => string) _tokenURI;
     
     Event public myEvent; // creating an instance for this event struct
     
@@ -90,7 +95,8 @@ contract Nft is ERC721,Ownable,ERC721URIStorage {
         myPerson.Address = _address;
     }
 
-    function selectEvent(string calldata _eventName, address _address) public  {
+
+    function selectEvent(string calldata _eventName) public  {
         uint256 index = eventToIndex[_eventName];
         require(index < events.length,"invalid event name");
         require(events[index].totalSupply > 0,"no available tickets");
@@ -98,13 +104,11 @@ contract Nft is ERC721,Ownable,ERC721URIStorage {
 
         _safeMint(msg.sender, tokenId);
         eventAttendee[tokenId] = msg.sender; // Track the attendee for the NFT
-        _setTokenURI(tokenId, events[index].imgUrl); // Set the token URI to the image URL
+        _tokenURI[tokenId] = events[index].imgUrl;// Set the token URI to the image URL
         tokenId++;
-    }
 
-    function tokenURI(uint256 tokenId) public view override returns (string memory) {
-    require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token");
-    return events[tokenId].imgUrl;
+        // NFT burns after the beginning of the event
+        require(currentTime > myEvent.Time,"event started");
+        _burn(tokenId);
     }
-
 }

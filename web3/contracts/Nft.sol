@@ -4,105 +4,140 @@ pragma solidity ^0.8.20;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "hardhat/console.sol";
+contract Nft is Ownable, ERC721URIStorage {
+    constructor() ERC721("Nft", "NFT") Ownable(msg.sender) {
+}
+    using Strings for uint256;
 
+    uint256 public tokenId = 1;
+    uint256 private currentTime = block.timestamp;
+    struct Buyer{
+        address buyerAddress;
+        string [] metaDatas;
+        uint256[] eventIds;
 
+    }
+    uint256 public buyerCount =0;
+    
+    mapping(address=>Buyer) public buyers;
+    function addBuyer(address _buyerAddress , string memory _metaData, uint256 _eventId) public returns (uint256){
+          if (buyers[_buyerAddress].buyerAddress == address(0)) {
+            // If the buyer does not exist, create a new entry
+            Buyer storage newBuyer = buyers[_buyerAddress];
+            newBuyer.buyerAddress = _buyerAddress;
+            buyerCount++;
+        }
 
-contract Nft is ERC721,Ownable {
+        // Append metadata and eventId to the buyer's data
+        buyers[_buyerAddress].metaDatas.push(_metaData);
+        buyers[_buyerAddress].eventIds.push(_eventId);
 
-    constructor(address initialOwner) ERC721("Nft", "NFT") Ownable(initialOwner) {}
+        return buyers[_buyerAddress].eventIds.length - 1;
+    }
+    function getBuyerDetails(address _buyerAddress) public view returns (Buyer memory) {
+    require(buyers[_buyerAddress].buyerAddress != address(0), "Buyer does not exist");
+    return buyers[_buyerAddress];
+}
 
-    using Strings for uint256;    
-    uint256 currentTime = block.timestamp;
-
-    struct Event{
+    struct Event {
         string eventName;
         string eventVenue;
         uint256 Time;
         uint256 Duration;
-        string creatorName;
         address creatorAddress;
-        string imgUrl;
+        string imgUrl1;
+        string imgUrl2;
+        string eventDescription;
         uint256 totalSupply;
+        uint256 ticketPrice;
     }
 
-    Event[] public events; // creation of dynamic array tostore the events
-    mapping (address => mapping(uint256 => Event)) personToEvents;
-    uint256 nextEventId = 1;
-    uint256 tokenId = 1;
-        
+    mapping(uint256 => Event) public events; // creation of dynamic array
+    uint256 public eventCount = 0;
+
     function createEvent(
-        string calldata _eventName,
-        string calldata _eventVenue,
+        string memory _eventName,
+        string memory _eventVenue,
+        string memory _eventDescription,
         uint256 _Time,
         uint256 _Duration,
-        string calldata _creatorName,
-        string memory _imgUrl,
-        uint256 _totalSupply
-    ) 
-    public 
+        address _creatorAddress,
+        string memory _imgUrl1,
+        string memory _imgUrl2,
+        uint256 _totalSupply,
+        uint256 _ticketPrice
+    ) public returns (uint256)
     {
-        require(block.timestamp > _Time, "event time must be in future");
-        events.push(Event({
-        eventName: _eventName,
-        eventVenue: _eventVenue,
-        Time: _Time,
-        Duration: _Duration,
-        creatorName: _creatorName,
-        creatorAddress: msg.sender,
-        imgUrl: _imgUrl,
-        totalSupply: _totalSupply
-        }));
+        require(_Time > block.timestamp, "event time must be in the future");
+        Event storage myEvent = events[eventCount];
+        myEvent.eventName = _eventName;
+        myEvent.eventVenue = _eventVenue;
+        myEvent.Duration = _Duration;
+        myEvent.eventDescription = _eventDescription;
+        myEvent.creatorAddress = _creatorAddress;
+        myEvent.imgUrl1 = _imgUrl1;
+        myEvent.imgUrl2 = _imgUrl2;
+        myEvent.Time = _Time + currentTime;
+        myEvent.totalSupply = _totalSupply;
+        myEvent.ticketPrice = _ticketPrice;
+
+        //pushing the event details to the array
+        eventCount++;
+        return eventCount - 1;
     }
 
-    function getEvent() public view returns (Event[] memory) {
-        return events;
+
+     receive() external payable {}
+    fallback() external payable {}
+function mintNFT(uint256 _eventId, address _buyerAddress, string memory _metadataUrl) public payable {
+    // Check if the event exists
+    require(_eventId < eventCount, "Invalid event ID");
+
+    // Check if the buyer exists, and add them if they don't
+    if (buyers[_buyerAddress].buyerAddress == address(0)) {
+        buyers[_buyerAddress].buyerAddress = _buyerAddress;
+        buyerCount++;
     }
 
-    function endEvents() private  {
-        uint256 i = 0;
-        while (i < events.length) {
-            if (events[i].Time + events[i].Duration < block.timestamp) {
-                if (i < events.length - 1) {
-                    events[i] = events[events.length - 1];
-                }
-                events.pop();
-            } else {
-                i++;
-            }
-        }
+    // Check if there are available tickets for the event
+    require(events[_eventId].totalSupply > 0, "No available tickets");
+
+    // Check if the buyer has enough funds to purchase the ticket
+    uint256 ticketPrice = events[_eventId].ticketPrice;
+    console.log(msg.value);
+    console.log(ticketPrice);
+    require(msg.value >= ticketPrice, "Insufficient funds");
+
+    // Mint the NFT to the buyer's address
+    uint256 newItemId = tokenId;
+    _mint(_buyerAddress, newItemId);
+
+    // Set the token URI for the NFT
+    _setTokenURI(newItemId, _metadataUrl);
+
+    // Update buyer's data
+    buyers[_buyerAddress].metaDatas.push(_metadataUrl);
+    buyers[_buyerAddress].eventIds.push(_eventId);
+
+    // Reduce the totalSupply of the event
+    events[_eventId].totalSupply--;
+
+    // Send the ticketPrice to the creatorAddress
+    payable(events[_eventId].creatorAddress).transfer(ticketPrice);
+
+    // Refund excess funds to the buyer
+    if (msg.value > ticketPrice) {
+        payable(_buyerAddress).transfer(msg.value - ticketPrice);
+    }
+     console.log(
+            "The NFT ID %s has been minted to %s",
+            newItemId,
+            msg.sender
+        );
+    tokenId++;
 }
 
-    //defining the structure of the person 
-    enum gender {M,F}
-    struct Person{
-        string Name;
-        gender Gender;
-        uint256 Age;
-        address Address;
-    }
 
-    Person public myPerson;
-
-    function register(string calldata _name,gender _gen,uint256 _age, address _address) external  {
-        // initializing the parameters
-        myPerson.Name = _name;
-        myPerson.Gender = _gen;
-        myPerson.Age = _age;
-        myPerson.Address = _address;
-    }
-
-    function selectEvent(uint256 eventId) public {
-        require(eventId > 0 && eventId < nextEventId,"Invalid event ID");
-        Event storage selectedEvent = events[eventId - 1];
-        require(selectedEvent.Time > block.timestamp, "Event has already started");
-        require(selectedEvent.totalSupply > 0,"no available tickets");
-        selectedEvent.totalSupply--;
-
-        _safeMint(msg.sender, tokenId);
-        personToEvents[msg.sender][eventId] = selectedEvent;
-        tokenId++;
-
-        require(currentTime > selectedEvent.Time,"event already started");
-        _burn(tokenId);
-        }
 }

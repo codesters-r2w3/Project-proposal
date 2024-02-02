@@ -97,7 +97,7 @@ const EventDetails = () => {
       console.error('Error generating QR code:', error);
     }
    // setIsFormVisible(false);
-    setUserName('');
+   // setUserName('');
   };
   
   
@@ -265,7 +265,7 @@ const EventDetails = () => {
                  <></> <p>Ticket URL: {generatedUrl}</p>
                   {/* Display the QR Code */}
                  <a href="${jsonUrl"> <p>JSON URL: {jsonUrl}</p> </a>{/* Display the JSON URL */}
-                  <QRCode value={generatedUrl} />
+                  {/* <QRCode value={generatedUrl} /> */}
                 </>
               )}
             

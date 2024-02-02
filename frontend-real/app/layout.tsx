@@ -4,6 +4,7 @@ import { Abel } from 'next/font/google'
 import '../styles/globals.css';
 import '../styles';
 import { ExampleProvider } from "../context/eventContext";
+import Sidebar from '../components/Sidebar.js';
 const roboto = Abel({
   weight: '400',
   subsets: ['latin'],
@@ -28,7 +29,9 @@ export default function RootLayout({
       <link rel="stylesheet" href="https://stijndv.com/fonts/Eudoxus-Sans.css" />
       </head>
       <body className={roboto.className}>
+      
       <ExampleProvider>
+      {/* <Sidebar/> */}
         {
       
       children

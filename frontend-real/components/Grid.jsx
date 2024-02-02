@@ -24,9 +24,29 @@ export default function RowAndColumnSpacing() {
  
   const [account, setAccount] = useState(null);
   useEffect(() => {
-    function initNFTContract() {
+    if (window.ethereum) {
+      setIsWalletInstalled(true);
+    }
+  }, []);
+  async function connectWallet() {
+    window.ethereum
+      .request({
+        method: "eth_requestAccounts",
+      })
+      .then((accounts) => {
+        setAccount(accounts[0]);
+      })
+      .catch((error) => {
+        alert("Something went wrong");
+      });
+  }
+  useEffect(() => {
+    function initNFTContract () {
       const provider = new BrowserProvider(window.ethereum);
       provider.getSigner().then((signer) => {
+        const currentAddress = signer.getAddress();
+
+    console.log("Current Address:", currentAddress);
         setNFTContract(new Contract(NFT_CONTRACT_ADDRESS, NFT.abi, signer));
         console.log("NFT contract successfully initialized");
       }).catch((error) => {

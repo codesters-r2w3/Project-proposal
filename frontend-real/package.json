@@ -30,7 +30,8 @@
     "react-qr-scanner": "^1.0.0-alpha.11",
     "react-responsive": "^9.0.2",
     "react-router-dom": "^6.21.3",
-    "streamifier": "^0.1.1"
+    "streamifier": "^0.1.1",
+    "web3": "^4.4.0"
   },
   "devDependencies": {
     "@types/node": "^20",

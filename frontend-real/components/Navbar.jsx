@@ -36,11 +36,7 @@ const Navbar = () => (
        Team  Codester
       </h2>
       <WalletConnect />
-      <img
-        src="/menu.svg"
-        alt="menu"
-        className="w-[24px] h-[24px] object-contain"
-      />
+      
 
       {/* <Sidebar /> */}
 

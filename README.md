@@ -39,8 +39,8 @@ EventBooking DApp revolutionizes the event industry by providing a secure and us
 
 ## 👥 Team Names:
 - Nikhil Taneja ([GitHub Profile](https://github.com/nikhiltaneja))
-- Revand S ([GitHub Profile](https://github.com/revands))
-- Sidharth ([GitHub Profile](https://github.com/sidharthdev))
+- Revand S ([GitHub Profile](https://github.com/revand5467))
+- Sidharth ([GitHub Profile](https://github.com/SIDHARTH20K4))
 
 ## ⭐ Star History
 

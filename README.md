@@ -43,7 +43,16 @@ EventBooking DApp revolutionizes the event industry by providing a secure and us
 - Sidharth ([GitHub Profile](https://github.com/sidharthdev))
 
 ## ⭐ Star History
-[![Star History Chart](https://api.star-history.com/svg?repos=codesters-r2w3/Project-proposal&type=Date)](https://star-history.com/#codesters-r2w3/Project-proposal&Date)
+
+
+<a href="https://star-history.com/#codesters-r2w3/Project-proposal&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=codesters-r2w3/Project-proposal&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=codesters-r2w3/Project-proposal&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=codesters-r2w3/Project-proposal&type=Date" />
+  </picture>
+</a>
+
 
 ## 🚀 How to Run:
 To run the EventBooking DApp locally, follow these commands:
